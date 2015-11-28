@@ -1,0 +1,12 @@
+[package]
+name = "spirograph"
+version = "0.1.0"
+authors = ["Trent Summerfield <trent.summerfield@gmail.com>"]
+
+[features]
+default = []
+internal = []
+
+[dependencies]
+sdl2 = "0.9"
+libc = "0.1.10"
