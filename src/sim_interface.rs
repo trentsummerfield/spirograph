@@ -12,7 +12,7 @@ pub struct Bitmap {
 }
 
 #[derive(Default)]
-pub struct button_state {
+pub struct Button {
     pub half_transition_count: usize,
     pub ended_down: bool,
 }
@@ -20,16 +20,16 @@ pub struct button_state {
 #[derive(Default)]
 pub struct Controller {
     pub active: usize,
-    pub up: button_state,
-    pub down: button_state,
-    pub left: button_state,
-    pub right: button_state,
-    pub left_shoulder: button_state,
-    pub right_shoulder: button_state,
-    pub a: button_state,
-    pub b: button_state,
-    pub x: button_state,
-    pub y: button_state,
+    pub up: Button,
+    pub down: Button,
+    pub left: Button,
+    pub right: Button,
+    pub left_shoulder: Button,
+    pub right_shoulder: Button,
+    pub a: Button,
+    pub b: Button,
+    pub x: Button,
+    pub y: Button,
 }
 
 pub struct Input {

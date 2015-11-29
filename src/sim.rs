@@ -3,11 +3,8 @@ use sim_interface::Input;
 use sim_interface::SimState;
 
 use std::any::Any;
-use std::f32::consts::PI;
-use std::ops;
 
 struct State {
-    initialized: bool,
     frame_num: u64,
 }
 
@@ -47,12 +44,12 @@ impl Bitmap {
     }
 }
 
-pub fn update_and_render(bitmap: &mut Bitmap, input: &Input, sim_state: Option<Box<SimState>>) -> Box<SimState> {
+pub fn update_and_render(bitmap: &mut Bitmap, _input: &Input, sim_state: Option<Box<SimState>>) -> Box<SimState> {
     bitmap.clear();
-    let mut sim_state = sim_state.unwrap_or(Box::new(State{initialized: false, frame_num: 0}));
+    let mut sim_state = sim_state.unwrap_or(Box::new(State{frame_num: 0}));
     {
         let state = sim_state.as_mut_any().downcast_mut().unwrap();
-        draw(bitmap, input, state);
+        draw(bitmap, state);
         state.frame_num += 1;
     }
     return sim_state;
@@ -78,6 +75,7 @@ impl V2 {
     }
 }
 
+#[allow(dead_code)]
 fn circle(t: f32, r: f32) -> V2 {
     return V2::new(r * t.cos(), r * t.sin());
 }
@@ -92,11 +90,11 @@ fn spiro(t: f32, big_radius: f32, little_radius: f32, l: f32) -> V2 {
     return V2::new(x, y);
 }
 
-fn draw(bitmap: &mut Bitmap, input: &Input, sim_state: &mut State) {
+fn draw(bitmap: &mut Bitmap, sim_state: &mut State) {
     let dim = V2::new(bitmap.width as f32, bitmap.height as f32);
     let offset = dim.scale(0.5);
-    let period = (sim_state.frame_num as f32 / 20.0);
-    draw_parametric(bitmap, period, |t| spiro(t, 220.0, 65.0, 0.8).add(dim.scale(0.5)));
+    let period = sim_state.frame_num as f32 / 20.0;
+    draw_parametric(bitmap, period, |t| spiro(t, 220.0, 65.0, 0.8).add(offset));
 }
 
 fn draw_parametric<F>(bitmap: &mut Bitmap, period: f32, parametric_func: F) -> ()
