@@ -3,6 +3,8 @@ extern crate sdl2;
 mod sim_interface;
 mod sim;
 
+use std::iter::FromIterator;
+
 use sdl2::pixels::PixelFormatEnum;
 use sdl2::event::Event;
 use sdl2::keyboard::Keycode;
@@ -57,7 +59,7 @@ fn main() {
 
     let mut start_time = timers.performance_counter();
     let mut running = true;
-    let mut input = Input::new();
+    let mut input = Input::new(Vec::from_iter(std::env::args()));
     let mut sim_state = None;
     while running {
         for event in event_pump.poll_iter() {

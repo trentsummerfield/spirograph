@@ -35,13 +35,15 @@ pub struct Controller {
 pub struct Input {
     pub dt: f32,
     pub keyboard: Controller,
+    pub command_line: Vec<String>
 }
 
 impl Input {
-    pub fn new() -> Input {
+    pub fn new(command_line: Vec<String>) -> Input {
         return Input{
             dt: 1.0 / 60.0,
-            keyboard: Controller {active: 1, ..Default::default()}
+            keyboard: Controller {active: 1, ..Default::default()},
+            command_line: command_line,
         };
     }
 }
