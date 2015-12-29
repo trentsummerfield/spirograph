@@ -16,8 +16,8 @@ fn blit(bitmap: &Bitmap, texture: &mut sdl2::render::Texture, renderer: &mut sdl
     let width = texture_query.width as usize;
     let height = texture_query.height as usize;
     texture.with_lock(None, |buffer: &mut [u8], pitch: usize| {
-        for y in (0..height) {
-            for x in (0..width) {
+        for y in 0..height {
+            for x in 0..width {
                 let offset = y * pitch + x * 4;
                 let i = y * bitmap.pitch as usize + x * 4;
                 buffer[offset + 0] = bitmap.memory[i + 0];
